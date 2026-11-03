@@ -584,50 +584,57 @@
   // Quiz éclair
   const questions = [
     { q: "Un monomère, c'est…", a: [
-      
-      ["une grande molécule en chaîne", false],
       ["la petite molécule répétée pour former le polymère", true],
+      ["une grande molécule en chaîne", false],
       ["une molécule d'eau éliminée", false]] },
     { q: "Dans une polycondensation, il s'élimine le plus souvent…", a: [
-      ["du dioxygène O₂", false],
       ["de l'eau H₂O", true],
-      
+      ["du dioxygène O₂", false],
       ["rien du tout", false]] },
     { q: "Le PMMA (Plexiglas) est obtenu par…", a: [
       ["polyaddition", true],
       ["polycondensation", false],
       ["solidification du verre", false]] },
     { q: "Une résine époxy durcie…", a: [
-      ["refond à chaque chauffage", false],
       ["ne peut plus jamais refondre (thermodurcissable)", true],
-      
+      ["refond à chaque chauffage", false],
       ["se dissout dans l'eau", false]] },
     { q: "Le recyclage mécanique consiste à…", a: [
-      ["brûler le plastique", false],
+      ["broyer, laver, fondre et reformer", true],
       ["casser les liaisons pour retrouver les monomères", false],
-      ["broyer, laver, fondre et reformer", true]] },
+      ["brûler le plastique", false]] },
     { q: "Le motif élémentaire du polyéthylène est…", a: [
-      ["—CH₂=CH₂—", false],
-      ["—CH₂-CH₂—", true],
-      
+      ["—CH₂—CH₂—", true],
+      ["l'atome de carbone seul", false],
       ["la molécule d'eau éliminée", false]] },
     { q: "L'indice de polymérisation n représente…", a: [
       ["le nombre de répétitions du motif élémentaire", true],
       ["la masse du polymère en grammes", false],
       ["le nombre d'adjuvants ajoutés", false]] },
     { q: "PMMA est le sigle de…", a: [
-      ["polymolymethaaminate", false],
-      ["polyméthacrylate de méthyle ", true],
+      ["polyméthacrylate de méthyle (le Plexiglas)", true],
       ["polyéthylène téréphtalate", false],
       ["polychlorure de vinyle", false]] },
     { q: "Un plastique biosourcé est…", a: [
-      ["comestible et sain ", false],
+      ["fabriqué à partir de matières renouvelables", true],
       ["toujours biodégradable", false],
-      ["fabriqué à partir de matières renouvelables", true]] }
+      ["toujours recyclé en France", false]] }
   ];
   let score = 0, answered = 0;
+  const TOTAL = questions.length;
+  document.getElementById('scoreMax').textContent = TOTAL;
   const box = document.getElementById('quizBox');
-  questions.forEach((item, qi) => {
+  // Mélange des réponses : la bonne n'est plus toujours en position 1
+  const shuffled = questions.map(item => {
+    const a = item.a.slice();
+    for (let i = a.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [a[i], a[j]] = [a[j], a[i]];
+    }
+    return a;
+  });
+  shuffled.forEach((answers, qi) => {
+    const item = questions[qi];
     const d = document.createElement('div');
     d.className = 'q';
     const p = document.createElement('p');
@@ -635,7 +642,7 @@
     d.appendChild(p);
     const fb = document.createElement('div');
     fb.className = 'feedback';
-    item.a.forEach(pair => {
+    answers.forEach(pair => {
       const txt = pair[0], good = pair[1];
       const b = document.createElement('button');
       b.textContent = txt;
@@ -647,16 +654,16 @@
           b.classList.add('bad');
           fb.textContent = '❌ Regarde à nouveau la section correspondante…'; fb.style.color = '#fca5a5';
           d.querySelectorAll('button').forEach(x => {
-            if (x.textContent === item.a.find(o => o[1])[0]) x.classList.add('good');
+            if (x.textContent === answers.find(o => o[1])[0]) x.classList.add('good');
           });
         }
         answered++;
-        if (answered === questions.length) {
+        if (answered === TOTAL) {
           document.getElementById('score').hidden = false;
           document.getElementById('scoreVal').textContent = score;
           document.getElementById('scoreMsg').textContent =
-            score === 8 ? 'Parfait, tu es prêt(e) pour le QCM Pronote ! 🚀' :
-            score >= 5 ? "Bien ! Relis les sections qui t'ont échappé, puis va sur Pronote." :
+            score === TOTAL ? 'Parfait, tu es prêt(e) pour le QCM Pronote ! 🚀' :
+            score >= Math.round(TOTAL * 0.6) ? "Bien ! Relis les sections qui t'ont échappé, puis va sur Pronote." :
             "Reprends la page tranquillement depuis le début, tu vas y arriver ! 💪";
         }
       };
