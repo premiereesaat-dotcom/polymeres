@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Polymères  · 1re STD2A</title>
+<title>Polymères — Les matériaux de tes créations · 1re STD2A</title>
 <style>
   :root{
     --ink:#1e1b2e; --paper:#fdf9f3; --violet:#7c3aed; --pink:#ec4899;
@@ -251,7 +251,7 @@
   <div class="float-mono" style="bottom:28%;right:8%;animation-delay:.6s">PET</div>
   <span class="badge">Physique-chimie · 1ʳᵉ STD2A · Distanciel</span>
   <h1>Les polymères,<br>les matériaux de<br>tes créations 🎨</h1>
-  <p>Plexiglas, résine, PLA d'impression 3D, fil nylon… Découvre toute la chimie cachée derrière tes matières préférées en atelier.</p>
+  <p>Plexiglas, résine, PLA d'impression 3D, fil nylon… Découvre la chimie cachée derrière tes matières préférées en atelier.</p>
   <div class="scroll-cue">↓ Fais défiler pour explorer</div>
 </header>
 
@@ -471,14 +471,48 @@
   </div>
   <div class="reveal" style="margin-top:40px">
     <h3 style="text-align:center;margin-bottom:20px">Les 7 familles — codes de tri</h3>
+    <div class="card" style="margin-bottom:22px;padding:18px">
+      <svg viewBox="0 0 920 320" role="img" aria-label="Symboles de recyclage : familles de plastiques numérotées de 1 à 7" style="width:100%;height:auto;display:block">
+        <rect width="920" height="320" rx="16" fill="#f7f2e9"/>
+        <defs>
+          <g id="tri">
+            <path d="M-30 22 L0 -32 L14 -8 L-14 -8" fill="none" stroke-width="9" stroke-linejoin="round" stroke-linecap="round"/>
+          </g>
+          <g id="mobius">
+            <g stroke="#16a34a" fill="none">
+              <use href="#tri" transform="rotate(0)"/>
+              <use href="#tri" transform="rotate(120)"/>
+              <use href="#tri" transform="rotate(240)"/>
+            </g>
+          </g>
+        </defs>
+        <!-- grand symbole à gauche -->
+        <use href="#mobius" transform="translate(105,150) scale(2.6)"/>
+        <!-- famille de symboles numérotés -->
+        <g font-family="Segoe UI, system-ui, sans-serif" text-anchor="middle">
+          <!-- ligne 1 -->
+          <g transform="translate(245,60)"><use href="#mobius"/><text y="52" font-size="26" font-weight="800" fill="#1e1b2e">1</text><text y="74" font-size="15" font-weight="700" fill="#1e1b2e">PET</text></g>
+          <g transform="translate(355,60)"><use href="#mobius"/><text y="52" font-size="26" font-weight="800" fill="#1e1b2e">2</text><text y="74" font-size="15" font-weight="700" fill="#1e1b2e">PE-HD</text></g>
+          <g transform="translate(465,60)"><use href="#mobius"/><text y="52" font-size="26" font-weight="800" fill="#1e1b2e">3</text><text y="74" font-size="15" font-weight="700" fill="#1e1b2e">PVC-U</text></g>
+          <g transform="translate(575,60)"><use href="#mobius"/><text y="52" font-size="26" font-weight="800" fill="#1e1b2e">3</text><text y="74" font-size="15" font-weight="700" fill="#1e1b2e">PVC-P</text></g>
+          <g transform="translate(685,60)"><use href="#mobius"/><text y="52" font-size="26" font-weight="800" fill="#1e1b2e">4</text><text y="74" font-size="15" font-weight="700" fill="#1e1b2e">PE-LD</text></g>
+          <g transform="translate(795,60)"><use href="#mobius"/><text y="52" font-size="26" font-weight="800" fill="#1e1b2e">5</text><text y="74" font-size="15" font-weight="700" fill="#1e1b2e">PP</text></g>
+          <!-- ligne 2 -->
+          <g transform="translate(245,200)"><use href="#mobius"/><text y="52" font-size="26" font-weight="800" fill="#1e1b2e">6</text><text y="74" font-size="15" font-weight="700" fill="#1e1b2e">PS</text></g>
+          <g transform="translate(355,200)"><use href="#mobius"/><text y="52" font-size="26" font-weight="800" fill="#1e1b2e">6</text><text y="74" font-size="15" font-weight="700" fill="#1e1b2e">PS-E</text></g>
+          <g transform="translate(465,200)"><use href="#mobius"/><text y="52" font-size="26" font-weight="800" fill="#1e1b2e">7</text><text y="74" font-size="15" font-weight="700" fill="#1e1b2e">OTHER</text></g>
+          <text x="580" y="258" font-size="14" fill="#7a7492" font-style="italic">Les 7 familles de plastiques et leurs sigles normalisés</text>
+        </g>
+      </svg>
+    </div>
     <div class="codes">
       <div class="code c1"><span class="num">1</span><span class="fam">PET</span><small>bouteilles, fibres</small></div>
-      <div class="code c2"><span class="num">2</span><span class="fam">PEHD</span><small>flacons, mobilier</small></div>
-      <div class="code c3"><span class="num">3</span><span class="fam">PVC</span><small>bâches, gaines</small></div>
-      <div class="code c4"><span class="num">4</span><span class="fam">PEBD</span><small>sacs, films</small></div>
+      <div class="code c2"><span class="num">2</span><span class="fam">PEHD</span><small>flacons, mobilier · sigle normalisé <b>PE-HD</b></small></div>
+      <div class="code c3"><span class="num">3</span><span class="fam">PVC</span><small>bâches, gaines · <b>PVC-U</b> rigide, <b>PVC-P</b> plastifié</small></div>
+      <div class="code c4"><span class="num">4</span><span class="fam">PEBD</span><small>sacs, films · sigle normalisé <b>PE-LD</b></small></div>
       <div class="code c5"><span class="num">5</span><span class="fam">PP</span><small>couvercles, boîtes</small></div>
-      <div class="code c6"><span class="num">6</span><span class="fam">PS</span><small>maquettes</small></div>
-      <div class="code c7"><span class="num">7</span><span class="fam">Autres</span><small>PMMA, PLA…</small></div>
+      <div class="code c6"><span class="num">6</span><span class="fam">PS</span><small>maquettes · <b>PS-E</b> = polystyrène expansé</small></div>
+      <div class="code c7"><span class="num">7</span><span class="fam">Autres</span><small>PMMA, PLA… (sigle <b>OTHER</b>)</small></div>
     </div>
     <p style="text-align:center;margin-top:18px;font-weight:600;color:#4b4563">💡 En design, la <b>mono-matière démontable</b> = objet recyclable. Pense-y dès le croquis !</p>
   </div>
@@ -510,12 +544,12 @@
     <span class="kicker k2">08 · À toi de créer</span>
     <h2>🎯 Mini-défi : détective des polymères</h2>
     <ol>
-      <li>🔎 Choisir un <b>objet de ton quotidien</b> fait d'un polymère</li>
-      <li>🏷️ Identifier sa famille grâce au <b>code de tri</b></li>
-      <li>🧪 Deviner sa méthode de polymérisation (addition ou condensation)</li>
-      <li>♻️ Proposer une <b>seconde vie créative</b> (croquis accepté !)</li>
+      <li>🔎 Choisis un <b>objet de ton quotidien</b> fait d'un polymère</li>
+      <li>🏷️ Identifie sa famille grâce au <b>code de tri</b></li>
+      <li>🧪 Devine sa méthode de polymérisation (addition ou condensation)</li>
+      <li>♻️ Propose-lui une <b>seconde vie créative</b> (croquis accepté !)</li>
     </ol>
-    <p style="margin-top:16px">📂 Déposer la réponse dans <b>l'espace documentaire partagé PC_1A... ( numéro de classe)</b> de l'ENT en indiquant bien le nom et la classe.</p>
+    <p style="margin-top:16px">📂 Dépose ta réponse dans <b>l'espace documentaire partagé</b> de l'ENT — je commenterai chacune. Des questions ? Écris-moi par messagerie Pronote, je réponds à tous.</p>
   </div>
 </section>
 
@@ -662,9 +696,9 @@
           document.getElementById('score').hidden = false;
           document.getElementById('scoreVal').textContent = score;
           document.getElementById('scoreMsg').textContent =
-            score === TOTAL ? 'Parfait, tu es prêt(e) pour le QCM Pronote ! 🚀' :
-            score >= Math.round(TOTAL * 0.6) ? "Bien ! Relis les sections qui t'ont échappé, puis va sur Pronote." :
-            "Reprends la page tranquillement depuis le début, tu vas y arriver ! 💪";
+            score === TOTAL ? 'Parfait  pour le QCM Pronote ! 🚀' :
+            score >= Math.round(TOTAL * 0.6) ? "Bien relire les sections avant d'aller sur Pronote." :
+            "Bon courage ! 💪";
         }
       };
       d.appendChild(b);
