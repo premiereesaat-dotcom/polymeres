@@ -544,12 +544,12 @@
     <span class="kicker k2">08 · À toi de créer</span>
     <h2>🎯 Mini-défi : détective des polymères</h2>
     <ol>
-      <li>🔎 Choisis un <b>objet de ton quotidien</b> fait d'un polymère</li>
-      <li>🏷️ Identifie sa famille grâce au <b>code de tri</b></li>
-      <li>🧪 Devine sa méthode de polymérisation (addition ou condensation)</li>
-      <li>♻️ Propose-lui une <b>seconde vie créative</b> (croquis accepté !)</li>
+      <li>🔎 Choisir un <b>objet du quotidien</b> fait d'un polymère</li>
+      <li>🏷️ Identifier sa famille grâce au <b>code de tri</b></li>
+      <li>🧪 Deviner sa méthode de polymérisation (addition ou condensation)</li>
+      <li>♻️ Proposer une <b>seconde vie créative</b> (croquis accepté !)</li>
     </ol>
-    <p style="margin-top:16px">📂 Dépose ta réponse dans <b>l'espace documentaire partagé</b> de l'ENT — je commenterai chacune. Des questions ? Écris-moi par messagerie Pronote, je réponds à tous.</p>
+    <p style="margin-top:16px">📂 Déposer la réponse dans <b><a href="https://enthdf.fr/workspace/workspace#/shared" l'espace documentaire partagé (nom de dossier PC_1A... ( numéro de classe) </a><b> </b> de l'ENT  </p>
   </div>
 </section>
 
@@ -639,7 +639,7 @@
       ["brûler le plastique", false]] },
     { q: "Le motif élémentaire du polyéthylène est…", a: [
       ["—CH₂—CH₂—", true],
-      ["l'atome de carbone seul", false],
+      ["—CH₂=CH₂—", false],
       ["la molécule d'eau éliminée", false]] },
     { q: "L'indice de polymérisation n représente…", a: [
       ["le nombre de répétitions du motif élémentaire", true],
@@ -648,7 +648,7 @@
     { q: "PMMA est le sigle de…", a: [
       ["polyméthacrylate de méthyle (le Plexiglas)", true],
       ["polyéthylène téréphtalate", false],
-      ["polychlorure de vinyle", false]] },
+      ["polymethylmetaaminate (Polycarbonate aminé)", false]] },
     { q: "Un plastique biosourcé est…", a: [
       ["fabriqué à partir de matières renouvelables", true],
       ["toujours biodégradable", false],
@@ -686,7 +686,7 @@
         if (good) { b.classList.add('good'); score++; fb.textContent = '✅ Exact !'; fb.style.color = '#4ade80'; }
         else {
           b.classList.add('bad');
-          fb.textContent = '❌ Regarde à nouveau la section correspondante…'; fb.style.color = '#fca5a5';
+          fb.textContent = '❌ Regarder à nouveau la section correspondante…'; fb.style.color = '#fca5a5';
           d.querySelectorAll('button').forEach(x => {
             if (x.textContent === answers.find(o => o[1])[0]) x.classList.add('good');
           });
