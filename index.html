@@ -499,9 +499,9 @@
   <div class="reveal quiz">
     <span class="kicker" style="background:rgba(255,255,255,.15);color:#fbbf24">07 · Auto-évaluation</span>
     <h3>⚡ Quiz éclair — vérifie que tu as tout compris</h3>
-    <p style="opacity:.85">Réponds aux 8 questions, ton score s'affiche à la fin ! (Le vrai QCM noté t'attend sur Pronote.)</p>
+    <p style="opacity:.85">Réponds aux 9 questions, ton score s'affiche à la fin ! (Le vrai QCM noté t'attend sur Pronote.)</p>
     <div id="quizBox"></div>
-    <div class="score" id="score" hidden>Score : <span id="scoreVal">0</span> / 8 — <span id="scoreMsg"></span></div>
+    <div class="score" id="score" hidden>Score : <span id="scoreVal">0</span> / <span id="scoreMax">9</span> — <span id="scoreMsg"></span></div>
   </div>
 </section>
 
@@ -621,8 +621,20 @@
       ["toujours recyclé en France", false]] }
   ];
   let score = 0, answered = 0;
+  const TOTAL = questions.length;
+  document.getElementById('scoreMax').textContent = TOTAL;
   const box = document.getElementById('quizBox');
-  questions.forEach((item, qi) => {
+  // Mélange des réponses : la bonne n'est plus toujours en position 1
+  const shuffled = questions.map(item => {
+    const a = item.a.slice();
+    for (let i = a.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [a[i], a[j]] = [a[j], a[i]];
+    }
+    return a;
+  });
+  shuffled.forEach((answers, qi) => {
+    const item = questions[qi];
     const d = document.createElement('div');
     d.className = 'q';
     const p = document.createElement('p');
@@ -630,7 +642,7 @@
     d.appendChild(p);
     const fb = document.createElement('div');
     fb.className = 'feedback';
-    item.a.forEach(pair => {
+    answers.forEach(pair => {
       const txt = pair[0], good = pair[1];
       const b = document.createElement('button');
       b.textContent = txt;
@@ -642,16 +654,16 @@
           b.classList.add('bad');
           fb.textContent = '❌ Regarde à nouveau la section correspondante…'; fb.style.color = '#fca5a5';
           d.querySelectorAll('button').forEach(x => {
-            if (x.textContent === item.a.find(o => o[1])[0]) x.classList.add('good');
+            if (x.textContent === answers.find(o => o[1])[0]) x.classList.add('good');
           });
         }
         answered++;
-        if (answered === questions.length) {
+        if (answered === TOTAL) {
           document.getElementById('score').hidden = false;
           document.getElementById('scoreVal').textContent = score;
           document.getElementById('scoreMsg').textContent =
-            score === 8 ? 'Parfait, tu es prêt(e) pour le QCM Pronote ! 🚀' :
-            score >= 5 ? "Bien ! Relis les sections qui t'ont échappé, puis va sur Pronote." :
+            score === TOTAL ? 'Parfait, tu es prêt(e) pour le QCM Pronote ! 🚀' :
+            score >= Math.round(TOTAL * 0.6) ? "Bien ! Relis les sections qui t'ont échappé, puis va sur Pronote." :
             "Reprends la page tranquillement depuis le début, tu vas y arriver ! 💪";
         }
       };
