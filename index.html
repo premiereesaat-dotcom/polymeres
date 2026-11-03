@@ -1,0 +1,665 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Polymères — Les matériaux de tes créations · 1re STD2A</title>
+<style>
+  :root{
+    --ink:#1e1b2e; --paper:#fdf9f3; --violet:#7c3aed; --pink:#ec4899;
+    --orange:#f97316; --teal:#0d9488; --blue:#2563eb; --green:#16a34a;
+    --radius:22px;
+    font-family:"Segoe UI", system-ui, -apple-system, sans-serif;
+    color:var(--ink); background:var(--paper);
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{overflow-x:hidden}
+
+  /* barre de progression */
+  #progress{position:fixed;top:0;left:0;height:6px;width:0%;
+    background:linear-gradient(90deg,var(--violet),var(--pink),var(--orange));
+    z-index:99;transition:width .2s}
+
+  /* HERO */
+  .hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;
+    align-items:center;text-align:center;padding:40px 20px;position:relative;
+    background:linear-gradient(-45deg,#7c3aed,#ec4899,#f97316,#0d9488);
+    background-size:400% 400%;animation:gradient 14s ease infinite;color:#fff}
+  @keyframes gradient{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
+  .hero .badge{background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.5);
+    padding:8px 22px;border-radius:99px;font-weight:600;letter-spacing:.12em;
+    text-transform:uppercase;font-size:.75rem;backdrop-filter:blur(4px);
+    animation:pop .8s ease both}
+  .hero h1{font-size:clamp(2.4rem,7vw,4.8rem);line-height:1.05;margin:24px 0 14px;
+    animation:rise .9s .15s ease both}
+  .hero p{font-size:clamp(1.05rem,2.5vw,1.35rem);max-width:620px;opacity:.95;
+    animation:rise .9s .3s ease both}
+  .hero .scroll-cue{margin-top:48px;font-size:1rem;opacity:.85;
+    animation:cue 1.6s ease-in-out infinite}
+  @keyframes cue{0%,100%{transform:translateY(0)}50%{transform:translateY(12px)}}
+  @keyframes pop{from{transform:scale(.6);opacity:0}to{transform:scale(1);opacity:1}}
+  @keyframes rise{from{transform:translateY(30px);opacity:0}to{transform:translateY(0);opacity:1}}
+
+  /* monomères flottants dans le hero */
+  .float-mono{position:absolute;width:46px;height:46px;border-radius:50%;
+    background:rgba(255,255,255,.25);border:2px solid rgba(255,255,255,.55);
+    display:flex;align-items:center;justify-content:center;font-size:.7rem;
+    font-weight:700;color:#fff;animation:float 6s ease-in-out infinite}
+  @keyframes float{0%,100%{transform:translateY(0) rotate(0)}50%{transform:translateY(-26px) rotate(8deg)}}
+
+  /* SECTIONS */
+  section{max-width:900px;margin:0 auto;padding:70px 22px}
+  .reveal{opacity:0;transform:translateY(50px);transition:all .8s cubic-bezier(.2,.7,.3,1)}
+  .reveal.visible{opacity:1;transform:translateY(0)}
+  h2{font-size:clamp(1.7rem,4vw,2.5rem);margin-bottom:8px;line-height:1.15}
+  .kicker{display:inline-block;font-size:.8rem;font-weight:700;letter-spacing:.15em;
+    text-transform:uppercase;padding:6px 16px;border-radius:99px;margin-bottom:18px}
+  .k1{background:#ede9fe;color:var(--violet)} .k2{background:#fce7f3;color:var(--pink)}
+  .k3{background:#ffedd5;color:#c2410c} .k4{background:#ccfbf1;color:var(--teal)}
+  .k5{background:#dbeafe;color:var(--blue)}
+  p.lead{font-size:1.12rem;line-height:1.65;margin-bottom:22px;max-width:700px}
+
+  /* carte */
+  .card{background:#fff;border-radius:var(--radius);padding:28px;
+    box-shadow:0 10px 40px rgba(30,27,46,.08);border:2px solid transparent;transition:transform .3s}
+  .card:hover{transform:translateY(-6px)}
+
+  /* analogie perles */
+  .beads{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:center;padding:26px 0}
+  .bead{width:44px;height:44px;border-radius:50%;display:flex;align-items:center;
+    justify-content:center;font-weight:700;color:#fff;font-size:.72rem;
+    animation:pop .6s ease both}
+  .bead:nth-child(1){background:var(--violet);animation-delay:.1s}
+  .bead:nth-child(2){background:var(--pink);animation-delay:.25s}
+  .bead:nth-child(3){background:var(--orange);animation-delay:.4s}
+  .bead:nth-child(4){background:var(--teal);animation-delay:.55s}
+  .bead:nth-child(5){background:var(--blue);animation-delay:.7s}
+  .bead:nth-child(6){background:var(--green);animation-delay:.85s}
+  .thread{height:5px;flex:0 0 22px;background:linear-gradient(90deg,#a78bfa,#f472b6);
+    border-radius:3px;animation:pop .5s ease both}
+  .legend{display:flex;gap:26px;flex-wrap:wrap;justify-content:center;font-size:.95rem}
+  .legend b{padding:3px 12px;border-radius:99px;color:#fff}
+
+  /* duel 2 colonnes */
+  .duo{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+  .col-add{background:linear-gradient(160deg,#faf5ff,#ede9fe);border:2px solid #c4b5fd}
+  .col-cond{background:linear-gradient(160deg,#fff1f2,#fce7f3);border:2px solid #f9a8d4}
+  .duo h3{font-size:1.35rem;margin-bottom:10px}
+  .duo ul{list-style:none}
+  .duo li{padding:7px 0;line-height:1.45}
+  .duo li::before{content:"→  ";font-weight:700}
+  .col-add li::before{color:var(--violet)} .col-cond li::before{color:var(--pink)}
+  .tag{display:inline-block;font-size:.75rem;font-weight:700;padding:4px 12px;
+    border-radius:99px;margin:4px 4px 0 0}
+  .t-v{background:#ede9fe;color:var(--violet)} .t-p{background:#fce7f3;color:#be185d}
+  .vs{display:flex;align-items:center;justify-content:center;margin:10px 0}
+  .vs span{background:var(--ink);color:#fff;font-weight:800;padding:8px 18px;
+    border-radius:99px;font-size:.9rem;animation:pop .8s 1s ease both}
+
+  /* animation polymérisation */
+  .poly-zone{background:#fff;border-radius:var(--radius);padding:30px;
+    box-shadow:0 10px 40px rgba(30,27,46,.08);text-align:center;overflow:hidden}
+  .monomers{display:flex;gap:60px;justify-content:center;padding:20px}
+  .monomers span{width:52px;height:52px;border-radius:50%;background:var(--teal);color:#fff;
+    display:flex;align-items:center;justify-content:center;font-weight:800;font-size:.75rem;
+    box-shadow:0 6px 18px rgba(13,148,136,.4);transition:transform 1.2s cubic-bezier(.5,0,.2,1)}
+  .monomers.merged span{transform:translateX(calc(var(--i) * -60px + 60px))}
+  .monomers span:nth-child(1){--i:1}.monomers span:nth-child(2){--i:2}
+  .monomers span:nth-child(3){--i:3}.monomers span:nth-child(4){--i:4}
+  .monomers span:nth-child(5){--i:5}
+  .poly-btn{margin-top:8px;background:var(--ink);color:#fff;border:none;padding:14px 30px;
+    border-radius:99px;font-size:1rem;font-weight:700;cursor:pointer;transition:transform .2s}
+  .poly-btn:hover{transform:scale(1.06)}
+  .poly-msg{margin-top:14px;font-weight:600;color:var(--teal);min-height:1.5em}
+
+  /* animation polycondensation v2 */
+  .tabs{display:flex;gap:10px;justify-content:center;margin-bottom:20px;flex-wrap:wrap}
+  .tab-btn{background:#fff;border:2px solid var(--pink);color:#be185d;font-weight:700;
+    padding:10px 22px;border-radius:99px;cursor:pointer;transition:all .25s;font-size:.95rem}
+  .tab-btn.active{background:var(--pink);color:#fff}
+  .tab-panel{display:none}
+  .tab-panel.show{display:block}
+  .chain-row{display:flex;justify-content:flex-start;align-items:center;flex-wrap:nowrap;
+    overflow-x:auto;padding:56px 8px 18px;min-height:120px;scrollbar-width:thin}
+  .junction{display:inline-flex;align-items:center;position:relative;flex:0 0 auto}
+  .grp{font-weight:800;font-size:1.05rem;padding:3px 7px;border-radius:9px;margin:0 2px;
+    flex:0 0 auto;white-space:nowrap}
+  .g-acid{color:#be185d;background:#fce7f3}
+  .g-alc{color:#0f766e;background:#ccfbf1}
+  .g-am{color:#6d28d9;background:#ede9fe}
+  .zig{width:46px;height:26px;margin:0 3px;flex:0 0 auto}
+  .carb{width:32px;height:40px;transform:translateY(-13px);margin:0 2px;flex:0 0 auto}
+  .carb text{font-weight:800;font-size:14px;text-anchor:middle;fill:#be185d;font-family:inherit}
+  @media (max-width:720px){
+    .grp{font-size:.92rem;padding:2px 5px}
+    .zig{width:38px;height:22px}
+    .carb{width:28px;height:36px;transform:translateY(-11px)}
+    .bond{font-size:.58rem;padding:2px 5px}
+    .hyd{padding:1px 4px}
+  }
+  .fly{display:inline-flex;overflow:hidden;max-width:60px;transition:transform 1s ease .1s,
+    max-width 1s ease .5s,padding .5s ease .5s,margin .5s ease .5s,opacity .8s ease .3s}
+  .chain-row.condensed .fly{transform:translateY(-64px) rotate(-14deg);opacity:0;
+    max-width:0;padding:0;margin:0}
+  .hyd{display:inline-flex;align-items:center;padding:2px 5px;border-radius:12px}
+  .h-acid{background:#fce7f3;border:1.5px dashed #f472b6}
+  .h-alc{background:#ccfbf1;border:1.5px dashed #2dd4bf}
+  .h-am{background:#ede9fe;border:1.5px dashed #a78bfa}
+  .lnk{width:11px;height:4px;border-radius:2px;margin:0 1px}
+  .la{background:#f472b6}.lb{background:#2dd4bf}.lm{background:#a78bfa}
+  .fly2{display:inline-flex;align-items:center;overflow:hidden;max-width:130px;
+    transition:transform 1s ease .1s,max-width 1s ease .5s,opacity .8s ease .3s,
+    padding .5s ease .5s,border .4s ease .6s}
+  .chain-row.condensed .fly2{transform:translateY(-72px) rotate(-8deg);opacity:0;
+    max-width:0;padding:0;border-width:0}
+  .water{position:absolute;top:-8px;left:50%;margin-left:-30px;width:60px;height:36px;
+    background:linear-gradient(#7dd3fc,#0ea5e9);color:#fff;display:flex;align-items:center;
+    justify-content:center;font-size:.68rem;font-weight:800;opacity:0;
+    transform:translateY(26px) scale(.4)}
+  .chain-row.condensed .water{animation:evaporate2 3.2s .4s ease-out forwards}
+  @keyframes evaporate2{0%{opacity:0;transform:translateY(26px) scale(.4)}
+    22%{opacity:1;transform:translateY(0) scale(1)}
+    78%{opacity:1;transform:translateY(-16px) scale(1)}
+    100%{opacity:0;transform:translateY(-70px) scale(1.05)}}
+  .bond{opacity:0;background:#fbbf24;color:#78350f;font-size:.66rem;font-weight:800;
+    padding:3px 7px;border-radius:8px;margin:0 2px;transform:scale(.3);
+    transition:all .7s ease .9s}
+  .chain-row.condensed .bond{opacity:1;transform:scale(1)}
+  .bond.b-amide{background:#c4b5fd;color:#4c1d95}
+
+  /* dico des sigles */
+  .dico{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px;margin-top:26px}
+  .dico .card{padding:18px 20px}
+  .dico .sigle{font-size:1.3rem;font-weight:800;margin-bottom:4px}
+  .dico .nom{font-weight:600;color:#4b4563}
+  .dico small{display:block;margin-top:6px;font-size:.8rem;color:#7a7492}
+
+  /* flip cards thermoplastique */
+  .flip-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:22px}
+  .flip{perspective:1000px;height:210px;cursor:pointer}
+  .flip-inner{position:relative;width:100%;height:100%;transition:transform .7s;
+    transform-style:preserve-3d}
+  .flip.flipped .flip-inner{transform:rotateY(180deg)}
+  .face{position:absolute;inset:0;border-radius:var(--radius);padding:22px;
+    backface-visibility:hidden;display:flex;flex-direction:column;justify-content:center;
+    align-items:center;text-align:center;font-weight:700}
+  .front-tp{background:linear-gradient(150deg,#0d9488,#2dd4bf);color:#fff;font-size:1.2rem}
+  .front-td{background:linear-gradient(150deg,#f97316,#fbbf24);color:#fff;font-size:1.2rem}
+  .back{background:#fff;border:3px solid #e5e7eb;transform:rotateY(180deg);
+    font-weight:500;font-size:.92rem;line-height:1.5}
+  .flip-hint{font-size:.75rem;opacity:.8;margin-top:8px;font-weight:400}
+
+  /* recyclage étapes */
+  .steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:18px}
+  .step{background:#fff;border-radius:var(--radius);padding:26px 20px;text-align:center;
+    box-shadow:0 8px 30px rgba(30,27,46,.07);border-top:6px solid}
+  .step .emoji{font-size:2.4rem;display:block;margin-bottom:12px;
+    animation:float 4s ease-in-out infinite}
+  .step h4{margin-bottom:8px;font-size:1.05rem}
+  .step p{font-size:.88rem;line-height:1.5;color:#4b4563}
+  .s1{border-color:var(--violet)} .s2{border-color:var(--pink)}
+  .s3{border-color:var(--orange)} .s4{border-color:var(--teal)}
+
+  /* codes de tri */
+  .codes{display:flex;flex-wrap:wrap;gap:14px;justify-content:center}
+  .code{width:120px;height:120px;border-radius:24px;display:flex;flex-direction:column;
+    align-items:center;justify-content:center;color:#fff;font-weight:800;
+    transition:transform .3s;cursor:default}
+  .code:hover{transform:scale(1.12) rotate(-3deg)}
+  .code .num{font-size:1.9rem}
+  .code .fam{font-size:.9rem}
+  .code small{font-weight:500;font-size:.68rem;opacity:.9;text-align:center;margin-top:4px}
+  .c1{background:#0ea5e9}.c2{background:#8b5cf6}.c3{background:#d946ef}
+  .c4{background:#f97316}.c5{background:#ef4444}.c6{background:#eab308;color:#1e1b2e}
+  .c7{background:#1e1b2e}
+
+  /* quiz */
+  .quiz{background:linear-gradient(160deg,#1e1b2e,#3b2f63);color:#fff;border-radius:var(--radius);
+    padding:34px;box-shadow:0 20px 60px rgba(30,27,46,.35)}
+  .quiz h3{font-size:1.4rem;margin-bottom:6px}
+  .quiz .q{margin:20px 0;padding:18px;background:rgba(255,255,255,.07);
+    border-radius:16px;border-left:5px solid var(--pink)}
+  .quiz .q p{font-weight:600;margin-bottom:12px}
+  .quiz button{display:block;width:100%;text-align:left;margin:6px 0;padding:11px 16px;
+    border-radius:12px;border:2px solid rgba(255,255,255,.25);background:transparent;
+    color:#fff;font-size:.95rem;cursor:pointer;transition:all .25s}
+  .quiz button:hover{border-color:var(--pink);background:rgba(236,72,153,.15)}
+  .quiz button.good{background:#16a34a;border-color:#16a34a;animation:pop .35s ease}
+  .quiz button.bad{background:#dc2626;border-color:#dc2626;opacity:.85}
+  .feedback{font-size:.85rem;margin-top:8px;min-height:1.2em;color:#fbbf24}
+  .score{font-size:1.1rem;font-weight:700;text-align:center;padding:16px;
+    background:rgba(255,255,255,.1);border-radius:16px;margin-top:18px}
+
+  /* défi */
+  .defi{background:linear-gradient(150deg,#fdf2f8,#ffedd5);border:3px dashed var(--pink);
+    border-radius:var(--radius);padding:34px}
+  .defi h2{color:#be185d}
+  .defi ol{margin:16px 0 0 22px;line-height:1.8}
+
+  footer{background:var(--ink);color:#a5a0bd;text-align:center;padding:34px;font-size:.85rem}
+  @media (max-width:640px){.duo{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div id="progress"></div>
+
+<header class="hero">
+  <div class="float-mono" style="top:12%;left:8%">CH₂</div>
+  <div class="float-mono" style="top:20%;right:10%;animation-delay:1.2s">C₂H₄</div>
+  <div class="float-mono" style="bottom:18%;left:14%;animation-delay:2s">H₂O</div>
+  <div class="float-mono" style="bottom:28%;right:8%;animation-delay:.6s">PET</div>
+  <span class="badge">Physique-chimie · 1ʳᵉ STD2A · Distanciel</span>
+  <h1>Les polymères,<br>les matériaux de<br>tes créations 🎨</h1>
+  <p>Plexiglas, résine, PLA d'impression 3D, fil nylon… Découvre la chimie cachée derrière tes matières préférées en atelier.</p>
+  <div class="scroll-cue">↓ Fais défiler pour explorer</div>
+</header>
+
+<section>
+  <div class="reveal">
+    <span class="kicker k1">01 · Les bases</span>
+    <h2>Un polymère, c'est un collier de perles</h2>
+    <p class="lead">Un <b>monomère</b> est une petite molécule. Quand des milliers de monomères se lient entre eux, ils forment un <b>polymère</b> : une longue chaîne. <i>Poly</i> = plusieurs, <i>mère</i> = partie.</p>
+  </div>
+  <div class="reveal card">
+    <div class="beads">
+      <span class="bead">mono.</span><span class="thread"></span>
+      <span class="bead">mono.</span><span class="thread"></span>
+      <span class="bead">mono.</span><span class="thread"></span>
+      <span class="bead">mono.</span><span class="thread"></span>
+      <span class="bead">mono.</span><span class="thread"></span>
+      <span class="bead">mono.</span>
+    </div>
+    <div class="legend">
+      <span>🔵 une perle = un <b style="background:var(--violet)">monomère</b></span>
+      <span>🧵 le collier entier = le <b style="background:var(--pink)">polymère</b></span>
+    </div>
+  </div>
+  <div class="reveal duo" style="margin-top:22px">
+    <div class="card">
+      <h3>🧩 Le motif élémentaire</h3>
+      <p style="line-height:1.55;font-size:.95rem">C'est la portion de chaîne qui <b>se répète</b>. Pour le polyéthylène : le motif est <b>—CH₂—CH₂—</b>.</p>
+    </div>
+    <div class="card">
+      <h3>🔢 L'indice de polymérisation <i>n</i></h3>
+      <p style="line-height:1.55;font-size:.95rem">C'est le <b>nombre de répétitions</b> du motif. Plus <i>n</i> est grand → chaînes plus longues → matériau plus <b>rigide, résistant, visqueux</b>.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="reveal">
+    <span class="kicker k2">02 · Ça bouge !</span>
+    <h2>Fabrique ta chaîne de polymère</h2>
+    <p class="lead">Clique sur le bouton : les monomères s'additionnent. Aucun atome n'est perdu — c'est une <b>polyaddition</b> !</p>
+  </div>
+  <div class="reveal poly-zone">
+    <div class="monomers" id="monomers">
+      <span>CH₂</span><span>CH₂</span><span>CH₂</span><span>CH₂</span><span>CH₂</span>
+    </div>
+    <button class="poly-btn" id="polyBtn">⚗️ Polymériser !</button>
+    <p class="poly-msg" id="polyMsg"></p>
+  </div>
+</section>
+
+<section>
+  <div class="reveal">
+    <span class="kicker k2">03 · L'eau s'échappe !</span>
+    <h2>La polycondensation en action</h2>
+    <p class="lead">Les chaînes carbonées sont dessinées en <b>zigzag</b> (notation topologique). Repère bien les groupes : <b style="color:#be185d">–COOH</b> (acide carboxylique, avec son hydroxyle <b>–O–H</b> ici séparé en deux parties liées), <b style="color:#0f766e">–OH</b> (alcool), <b style="color:#6d28d9">–NH₂</b> (amine). Clique : l'<b>hydroxyle O–H de l'acide</b> se détache du carboxyle et s'envole <b>avec le H de l'alcool</b> (ou de l'amine) pour former l'eau — il reste la liaison ester ou amide !</p>
+  </div>
+  <div class="reveal poly-zone">
+    <p style="font-size:.75rem;color:#7a7492;text-align:center;margin-bottom:8px">📱 Sur petit écran : fais glisser horizontalement pour voir la molécule en entier</p>
+    <div class="tabs">
+      <button class="tab-btn active" data-tab="tab-polyester">🧪 Polyester (acide + alcool)</button>
+      <button class="tab-btn" data-tab="tab-polyamide">🕸️ Polyamide — nylon (acide + amine)</button>
+    </div>
+
+    <div class="tab-panel show" id="tab-polyester">
+      <div class="chain-row" id="rowPolyester">
+        <span class="grp g-acid">HOOC</span>
+        <svg class="zig" viewBox="0 0 46 26"><polyline points="1,20 9,7 17,20 25,7 33,20 41,7" fill="none" stroke="#be185d" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span class="junction">
+          <span class="water">H₂O</span>
+          <svg class="carb" viewBox="0 0 32 40"><text x="16" y="12">O</text><line x1="12" y1="16" x2="12" y2="26" stroke="#be185d" stroke-width="2.2"/><line x1="20" y1="16" x2="20" y2="26" stroke="#be185d" stroke-width="2.2"/><text x="16" y="39">C</text></svg>
+          <span class="hyd h-acid fly2"><span class="grp g-acid">O</span><span class="lnk la"></span><span class="grp g-acid">H</span></span>
+          <span class="bond">ester</span>
+          <span class="hyd h-alc"><span class="grp g-alc fly">H</span><span class="lnk lb"></span><span class="grp g-alc">O</span></span>
+        </span>
+        <svg class="zig" viewBox="0 0 46 26"><polyline points="1,20 9,7 17,20 25,7 33,20 41,7" fill="none" stroke="#0f766e" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span class="junction">
+          <span class="water">H₂O</span>
+          <span class="hyd h-alc"><span class="grp g-alc">O</span><span class="lnk lb"></span><span class="grp g-alc fly">H</span></span>
+          <span class="bond">ester</span>
+          <span class="hyd h-acid fly2"><span class="grp g-acid">O</span><span class="lnk la"></span><span class="grp g-acid">H</span></span>
+          <svg class="carb" viewBox="0 0 32 40"><text x="16" y="12">O</text><line x1="12" y1="16" x2="12" y2="26" stroke="#be185d" stroke-width="2.2"/><line x1="20" y1="16" x2="20" y2="26" stroke="#be185d" stroke-width="2.2"/><text x="16" y="39">C</text></svg>
+        </span>
+        <svg class="zig" viewBox="0 0 46 26"><polyline points="1,20 9,7 17,20 25,7 33,20 41,7" fill="none" stroke="#be185d" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span class="grp g-acid">COOH</span>
+      </div>
+      <p class="poly-msg" style="min-height:1.6em">Diacide + dialcool → <b>polyester</b> (comme le PET). L'hydroxyle O–H de l'acide part avec le H de l'alcool : il reste la liaison <b>ester –CO–O–</b>.</p>
+      <button class="poly-btn" data-row="rowPolyester">💧 Condenser !</button>
+    </div>
+
+    <div class="tab-panel" id="tab-polyamide">
+      <div class="chain-row" id="rowPolyamide">
+        <span class="grp g-acid">HOOC</span>
+        <svg class="zig" viewBox="0 0 46 26"><polyline points="1,20 9,7 17,20 25,7 33,20 41,7" fill="none" stroke="#be185d" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span class="junction">
+          <span class="water">H₂O</span>
+          <svg class="carb" viewBox="0 0 32 40"><text x="16" y="12">O</text><line x1="12" y1="16" x2="12" y2="26" stroke="#be185d" stroke-width="2.2"/><line x1="20" y1="16" x2="20" y2="26" stroke="#be185d" stroke-width="2.2"/><text x="16" y="39">C</text></svg>
+          <span class="hyd h-acid fly2"><span class="grp g-acid">O</span><span class="lnk la"></span><span class="grp g-acid">H</span></span>
+          <span class="bond b-amide">amide</span>
+          <span class="hyd h-am"><span class="grp g-am fly">H</span><span class="lnk lm"></span><span class="grp g-am">NH</span></span>
+        </span>
+        <svg class="zig" viewBox="0 0 46 26"><polyline points="1,20 9,7 17,20 25,7 33,20 41,7" fill="none" stroke="#6d28d9" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span class="junction">
+          <span class="water">H₂O</span>
+          <span class="hyd h-am"><span class="grp g-am">NH</span><span class="lnk lm"></span><span class="grp g-am fly">H</span></span>
+          <span class="bond b-amide">amide</span>
+          <span class="hyd h-acid fly2"><span class="grp g-acid">O</span><span class="lnk la"></span><span class="grp g-acid">H</span></span>
+          <svg class="carb" viewBox="0 0 32 40"><text x="16" y="12">O</text><line x1="12" y1="16" x2="12" y2="26" stroke="#be185d" stroke-width="2.2"/><line x1="20" y1="16" x2="20" y2="26" stroke="#be185d" stroke-width="2.2"/><text x="16" y="39">C</text></svg>
+        </span>
+        <svg class="zig" viewBox="0 0 46 26"><polyline points="1,20 9,7 17,20 25,7 33,20 41,7" fill="none" stroke="#be185d" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span class="grp g-acid">COOH</span>
+      </div>
+      <p class="poly-msg" style="min-height:1.6em">Diacide + <b>diamine</b> → <b>polyamide</b> : c'est le <b>nylon-6,6</b> ! L'hydroxyle O–H de l'acide part avec un H de l'amine : il reste la liaison <b>amide –CO–NH–</b>, qui donne des fibres très résistantes.</p>
+      <button class="poly-btn" data-row="rowPolyamide">💧 Condenser !</button>
+    </div>
+  </div>
+  <div class="reveal card" style="margin-top:22px">
+    <p style="line-height:1.7;font-size:.95rem">🔍 <b>Suis les couleurs :</b> au départ, chaque groupement est encadré et ses atomes liés par un trait. À la condensation, l'<b>hydroxyle O–H de l'acide</b> (rose) se détache du carbonyle <b>CO</b> et s'envole <b>avec le H de l'alcool</b> (vert) ou de l'amine (violet) : ensemble ils forment la molécule d'<b>eau H₂O</b>. Ce qui reste — le carbonyle de l'acide et l'oxygène de l'alcool (ou l'azote de l'amine) — constitue la nouvelle liaison <b style="color:#b45309">ester –CO–O–</b> ou <b style="color:#4c1d95">amide –CO–NH–</b>, bien visible dans la chaîne finale : c'est la <b>signature</b> de la polycondensation !<br>
+    🎨 À l'atelier : le PET (polyester) se file en fibres textiles ; le nylon-6,6 se file aussi — la « fibre de nylon » tirée entre deux couches liquides, c'est une polycondensation en direct.</p>
+  </div>
+</section>
+
+<section>
+  <div class="reveal">
+    <span class="kicker k3">04 · Le duel</span>
+    <h2>Deux façons de faire un polymère</h2>
+  </div>
+  <div class="reveal duo">
+    <div class="card col-add">
+      <h3 style="color:var(--violet)">➕ Polyaddition</h3>
+      <ul>
+        <li>Les monomères s'additionnent</li>
+        <li><b>Rien ne se perd</b> : tous les atomes restent</li>
+        <li>Monomères à double liaison C=C</li>
+      </ul>
+      <div style="margin-top:12px">
+        <span class="tag t-v">PE — sacs</span>
+        <span class="tag t-v">PVC — bâches</span>
+        <span class="tag t-v">PMMA — Plexiglas</span>
+      </div>
+    </div>
+    <div class="card col-cond">
+      <h3 style="color:#be185d">💧 Polycondensation</h3>
+      <ul>
+        <li>Les monomères se lient</li>
+        <li>Une petite molécule est <b>éliminée</b> : le plus souvent H₂O</li>
+        <li>Monomères à 2 fonctions réactives</li>
+      </ul>
+      <div style="margin-top:12px">
+        <span class="tag t-p">PET — bouteilles</span>
+        <span class="tag t-p">Nylon — textile &amp; 3D</span>
+        <span class="tag t-p">PLA — impression 3D</span>
+      </div>
+    </div>
+  </div>
+  <div class="vs reveal"><span>💡 Astuce : « condensation » = de l'eau qui s'échappe, comme sur une vitre !</span></div>
+  <div class="reveal" style="margin-top:40px">
+    <h3 style="text-align:center;margin-bottom:6px">📖 Le dico des sigles</h3>
+    <p style="text-align:center;margin-bottom:18px;color:#4b4563">Les noms complets à connaître — ils composent souvent les questions du bac !</p>
+    <div class="dico">
+      <div class="card reveal"><div class="sigle" style="color:var(--violet)">PE</div><div class="nom">polyéthylène</div><small>polyaddition · sacs, flacons (codes 2 et 4)</small></div>
+      <div class="card reveal"><div class="sigle" style="color:var(--violet)">PVC</div><div class="nom">polychlorure de vinyle</div><small>polyaddition · bâches, gaines, feutres (code 3)</small></div>
+      <div class="card reveal"><div class="sigle" style="color:var(--violet)">PS</div><div class="nom">polystyrène</div><small>polyaddition · maquettes, emballages (code 6)</small></div>
+      <div class="card reveal"><div class="sigle" style="color:var(--violet)">PMMA</div><div class="nom">polyméthacrylate de méthyle</div><small>polyaddition · le « Plexiglas » (code 7)</small></div>
+      <div class="card reveal"><div class="sigle" style="color:#be185d">PET</div><div class="nom">polyéthylène téréphtalate</div><small>polycondensation (ester) · bouteilles, fibres (code 1)</small></div>
+      <div class="card reveal"><div class="sigle" style="color:#be185d">PA 6,6</div><div class="nom">polyamide 6,6 (nylon)</div><small>polycondensation (amide) · textiles, impression 3D</small></div>
+      <div class="card reveal"><div class="sigle" style="color:#be185d">PLA</div><div class="nom">acide polylactique</div><small>polycondensation · impression 3D, biosourcé (amidon de maïs)</small></div>
+      <div class="card reveal"><div class="sigle" style="color:#c2410c">PP</div><div class="nom">polypropylène</div><small>polyaddition · couvercles, boîtes (code 5)</small></div>
+      <div class="card reveal"><div class="sigle" style="color:#c2410c">PUR</div><div class="nom">polyuréthane</div><small>thermodurcissable le plus souvent · mousses, revêtements</small></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="reveal">
+    <span class="kicker k4">05 · Chauffe ou figé ?</span>
+    <h2>Thermoplastique ou thermodurcissable ?</h2>
+    <p class="lead">Clique sur les cartes pour les retourner.</p>
+  </div>
+  <div class="reveal flip-grid">
+    <div class="flip" onclick="this.classList.toggle('flipped')">
+      <div class="flip-inner">
+        <div class="face front-tp">♻️ Thermoplastique<div class="flip-hint">Clique pour retourner</div></div>
+        <div class="face back">Il <b>ramollit à chaud</b> et redevient dur au refroidissement… autant de fois qu'on veut !<br>→ <b>Recyclable</b> par refusion.<br>Ex : PE, PMMA, PLA, PVC.</div>
+      </div>
+    </div>
+    <div class="flip" onclick="this.classList.toggle('flipped')">
+      <div class="flip-inner">
+        <div class="face front-td">🔒 Thermodurcissable<div class="flip-hint">Clique pour retourner</div></div>
+        <div class="face back">Après durcissement (réticulation), il est <b>figé pour toujours</b> : il ne refond jamais !<br>→ Non refondu, souvent incinéré.<br>Ex : résine époxy, polyuréthane.</div>
+      </div>
+    </div>
+    <div class="flip" onclick="this.classList.toggle('flipped')">
+      <div class="flip-inner">
+        <div class="face" style="background:linear-gradient(150deg,#7c3aed,#a78bfa);color:#fff;font-size:1.15rem">🌡️ Transition vitreuse<div class="flip-hint">Clique pour retourner</div></div>
+        <div class="face back">Sous la température <b>Tg</b>, le polymère est rigide comme du verre ; au-dessus, il devient <b>souple, caoutchoutique</b>.<br>Ex : le PVC au-dessus de Tg devient souple → parois de flacon souples ou bâche.</div>
+      </div>
+    </div>
+    <div class="flip" onclick="this.classList.toggle('flipped')">
+      <div class="flip-inner">
+        <div class="face" style="background:linear-gradient(150deg,#0d9488,#0ea5e9);color:#fff;font-size:1.15rem">🧪 Les adjuvants<div class="flip-hint">Clique pour retourner</div></div>
+        <div class="face back">Un polymère seul ne suffit pas : on ajoute des <b>adjuvants</b> — plastifiants (PVC souple), pigments, antioxydants, ignifugeants…<br>🎨 Ce sont eux qui donnent la couleur, la souplesse et la sécurité de tes plastiques !</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="reveal">
+    <span class="kicker k5">06 · Recyclage</span>
+    <h2>Le voyage d'un plastique recyclé</h2>
+  </div>
+  <div class="reveal steps">
+    <div class="step s1"><span class="emoji">🗑️</span><h4>1. Collecte &amp; tri</h4><p>On sépare les familles de plastiques (PE, PET, PVC…)</p></div>
+    <div class="step s2"><span class="emoji">🔨</span><h4>2. Broyage &amp; lavage</h4><p>Le plastique devient des <b>granulés</b> : de petites perles prêtes à réutiliser</p></div>
+    <div class="step s3"><span class="emoji">🔥</span><h4>3. Fusion</h4><p>Les granulés fondent (thermoplastique uniquement !)</p></div>
+    <div class="step s4"><span class="emoji">✨</span><h4>4. Nouveau produit</h4><p>Extrusion, moulage… l'objet renaît sous une nouvelle forme</p></div>
+  </div>
+  <div class="reveal" style="margin-top:40px">
+    <h3 style="text-align:center;margin-bottom:20px">Les 7 familles — codes de tri</h3>
+    <div class="codes">
+      <div class="code c1"><span class="num">1</span><span class="fam">PET</span><small>bouteilles, fibres</small></div>
+      <div class="code c2"><span class="num">2</span><span class="fam">PEHD</span><small>flacons, mobilier</small></div>
+      <div class="code c3"><span class="num">3</span><span class="fam">PVC</span><small>bâches, gaines</small></div>
+      <div class="code c4"><span class="num">4</span><span class="fam">PEBD</span><small>sacs, films</small></div>
+      <div class="code c5"><span class="num">5</span><span class="fam">PP</span><small>couvercles, boîtes</small></div>
+      <div class="code c6"><span class="num">6</span><span class="fam">PS</span><small>maquettes</small></div>
+      <div class="code c7"><span class="num">7</span><span class="fam">Autres</span><small>PMMA, PLA…</small></div>
+    </div>
+    <p style="text-align:center;margin-top:18px;font-weight:600;color:#4b4563">💡 En design, la <b>mono-matière démontable</b> = objet recyclable. Pense-y dès le croquis !</p>
+  </div>
+  <div class="reveal duo" style="margin-top:30px">
+    <div class="card col-add" style="text-align:center">
+      <h3 style="color:var(--violet)">🌱 Biosourcé</h3>
+      <p style="line-height:1.55;font-size:.92rem">Fabriqué à partir de <b>matières renouvelables</b> (amidon de maïs pour le PLA, huile de ricin…). Attention : il n'est pas forcément compostable !</p>
+    </div>
+    <div class="card col-cond" style="text-align:center">
+      <h3 style="color:#be185d">🍂 Biodégradable</h3>
+      <p style="line-height:1.55;font-size:.92rem">Se décompose par des <b>micro-organismes</b> en conditions définies (compost industriel). Il n'est pas forcément biosourcé — les deux notions sont <b>indépendantes</b> !</p>
+    </div>
+  </div>
+  <div class="vs reveal"><span>♻️ Deux voies de recyclage : mécanique (broyage-fusion) ou chimique (on casse les liaisons pour retrouver les monomères — envisageable pour les polycondensats comme le PET)</span></div>
+</section>
+
+<section>
+  <div class="reveal quiz">
+    <span class="kicker" style="background:rgba(255,255,255,.15);color:#fbbf24">07 · Auto-évaluation</span>
+    <h3>⚡ Quiz éclair — vérifie que tu as tout compris</h3>
+    <p style="opacity:.85">Réponds aux 8 questions, ton score s'affiche à la fin ! (Le vrai QCM noté t'attend sur Pronote.)</p>
+    <div id="quizBox"></div>
+    <div class="score" id="score" hidden>Score : <span id="scoreVal">0</span> / 8 — <span id="scoreMsg"></span></div>
+  </div>
+</section>
+
+<section>
+  <div class="reveal defi">
+    <span class="kicker k2">08 · À toi de créer</span>
+    <h2>🎯 Mini-défi : détective des polymères</h2>
+    <ol>
+      <li>🔎 Choisis un <b>objet de ton quotidien</b> fait d'un polymère</li>
+      <li>🏷️ Identifie sa famille grâce au <b>code de tri</b></li>
+      <li>🧪 Devine sa méthode de polymérisation (addition ou condensation)</li>
+      <li>♻️ Propose-lui une <b>seconde vie créative</b> (croquis accepté !)</li>
+    </ol>
+    <p style="margin-top:16px">📂 Dépose ta réponse dans <b>l'espace documentaire partagé</b> de l'ENT — je commenterai chacune. Des questions ? Écris-moi par messagerie Pronote, je réponds à tous.</p>
+  </div>
+</section>
+
+<footer>Physique-chimie · ESAAT · Première STD2A — Séquence distanciel sur les polymères</footer>
+
+<script>
+  // Barre de progression
+  const bar = document.getElementById('progress');
+  addEventListener('scroll', () => {
+    const h = document.documentElement;
+    bar.style.width = (h.scrollTop / (h.scrollHeight - h.clientHeight) * 100) + '%';
+  });
+
+  // Révélation au scroll
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: .12 });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+  // Animation polymérisation
+  const btn = document.getElementById('polyBtn');
+  const monomers = document.getElementById('monomers');
+  const msg = document.getElementById('polyMsg');
+  let done = false;
+  btn.addEventListener('click', () => {
+    if (!done) {
+      monomers.classList.add('merged');
+      msg.textContent = "🎉 5 monomères → 1 chaîne de polyéthylène (PE) ! Aucun atome perdu : c'est la polyaddition.";
+      btn.textContent = '↩️ Recommencer';
+      done = true;
+    } else {
+      monomers.classList.remove('merged');
+      msg.textContent = '';
+      btn.textContent = '⚗️ Polymériser !';
+      done = false;
+    }
+  });
+
+  // Onglets polycondensation
+  document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('show'));
+      btn.classList.add('active');
+      document.getElementById(btn.dataset.tab).classList.add('show');
+    });
+  });
+
+  // Boutons de condensation (un par animation)
+  document.querySelectorAll('.poly-btn[data-row]').forEach(btn => {
+    let done = false;
+    btn.addEventListener('click', () => {
+      const row = document.getElementById(btn.dataset.row);
+      if (!done) {
+        row.classList.add('condensed');
+        btn.textContent = '↩️ Recommencer';
+        done = true;
+      } else {
+        row.classList.remove('condensed');
+        btn.textContent = '💧 Condenser !';
+        done = false;
+      }
+    });
+  });
+
+  // Quiz éclair
+  const questions = [
+    { q: "Un monomère, c'est…", a: [
+      ["la petite molécule répétée pour former le polymère", true],
+      ["une grande molécule en chaîne", false],
+      ["une molécule d'eau éliminée", false]] },
+    { q: "Dans une polycondensation, il s'élimine le plus souvent…", a: [
+      ["de l'eau H₂O", true],
+      ["du dioxygène O₂", false],
+      ["rien du tout", false]] },
+    { q: "Le PMMA (Plexiglas) est obtenu par…", a: [
+      ["polyaddition", true],
+      ["polycondensation", false],
+      ["solidification du verre", false]] },
+    { q: "Une résine époxy durcie…", a: [
+      ["ne peut plus jamais refondre (thermodurcissable)", true],
+      ["refond à chaque chauffage", false],
+      ["se dissout dans l'eau", false]] },
+    { q: "Le recyclage mécanique consiste à…", a: [
+      ["broyer, laver, fondre et reformer", true],
+      ["casser les liaisons pour retrouver les monomères", false],
+      ["brûler le plastique", false]] },
+    { q: "Le motif élémentaire du polyéthylène est…", a: [
+      ["—CH₂—CH₂—", true],
+      ["l'atome de carbone seul", false],
+      ["la molécule d'eau éliminée", false]] },
+    { q: "L'indice de polymérisation n représente…", a: [
+      ["le nombre de répétitions du motif élémentaire", true],
+      ["la masse du polymère en grammes", false],
+      ["le nombre d'adjuvants ajoutés", false]] },
+    { q: "PMMA est le sigle de…", a: [
+      ["polyméthacrylate de méthyle (le Plexiglas)", true],
+      ["polyéthylène téréphtalate", false],
+      ["polychlorure de vinyle", false]] },
+    { q: "Un plastique biosourcé est…", a: [
+      ["fabriqué à partir de matières renouvelables", true],
+      ["toujours biodégradable", false],
+      ["toujours recyclé en France", false]] }
+  ];
+  let score = 0, answered = 0;
+  const box = document.getElementById('quizBox');
+  questions.forEach((item, qi) => {
+    const d = document.createElement('div');
+    d.className = 'q';
+    const p = document.createElement('p');
+    p.textContent = (qi + 1) + '. ' + item.q;
+    d.appendChild(p);
+    const fb = document.createElement('div');
+    fb.className = 'feedback';
+    item.a.forEach(pair => {
+      const txt = pair[0], good = pair[1];
+      const b = document.createElement('button');
+      b.textContent = txt;
+      b.onclick = () => {
+        if (d.dataset.done) return;
+        d.dataset.done = '1';
+        if (good) { b.classList.add('good'); score++; fb.textContent = '✅ Exact !'; fb.style.color = '#4ade80'; }
+        else {
+          b.classList.add('bad');
+          fb.textContent = '❌ Regarde à nouveau la section correspondante…'; fb.style.color = '#fca5a5';
+          d.querySelectorAll('button').forEach(x => {
+            if (x.textContent === item.a.find(o => o[1])[0]) x.classList.add('good');
+          });
+        }
+        answered++;
+        if (answered === questions.length) {
+          document.getElementById('score').hidden = false;
+          document.getElementById('scoreVal').textContent = score;
+          document.getElementById('scoreMsg').textContent =
+            score === 8 ? 'Parfait, tu es prêt(e) pour le QCM Pronote ! 🚀' :
+            score >= 5 ? "Bien ! Relis les sections qui t'ont échappé, puis va sur Pronote." :
+            "Reprends la page tranquillement depuis le début, tu vas y arriver ! 💪";
+        }
+      };
+      d.appendChild(b);
+    });
+    d.appendChild(fb);
+    box.appendChild(d);
+  });
+</script>
+</body>
+</html>
