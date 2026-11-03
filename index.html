@@ -621,20 +621,8 @@
       ["toujours recyclé en France", false]] }
   ];
   let score = 0, answered = 0;
-  const TOTAL = questions.length;
-  document.getElementById('scoreMax').textContent = TOTAL;
   const box = document.getElementById('quizBox');
-  // Mélange des réponses : la bonne n'est plus toujours en position 1
-  const shuffled = questions.map(item => {
-    const a = item.a.slice();
-    for (let i = a.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [a[i], a[j]] = [a[j], a[i]];
-    }
-    return a;
-  });
-  shuffled.forEach((answers, qi) => {
-    const item = questions[qi];
+  questions.forEach((item, qi) => {
     const d = document.createElement('div');
     d.className = 'q';
     const p = document.createElement('p');
@@ -642,7 +630,7 @@
     d.appendChild(p);
     const fb = document.createElement('div');
     fb.className = 'feedback';
-    answers.forEach(pair => {
+    item.a.forEach(pair => {
       const txt = pair[0], good = pair[1];
       const b = document.createElement('button');
       b.textContent = txt;
@@ -654,16 +642,16 @@
           b.classList.add('bad');
           fb.textContent = '❌ Regarde à nouveau la section correspondante…'; fb.style.color = '#fca5a5';
           d.querySelectorAll('button').forEach(x => {
-            if (x.textContent === answers.find(o => o[1])[0]) x.classList.add('good');
+            if (x.textContent === item.a.find(o => o[1])[0]) x.classList.add('good');
           });
         }
         answered++;
-        if (answered === TOTAL) {
+        if (answered === questions.length) {
           document.getElementById('score').hidden = false;
           document.getElementById('scoreVal').textContent = score;
           document.getElementById('scoreMsg').textContent =
-            score === TOTAL ? 'Parfait, tu es prêt(e) pour le QCM Pronote ! 🚀' :
-            score >= Math.round(TOTAL * 0.6) ? "Bien ! Relis les sections qui t'ont échappé, puis va sur Pronote." :
+            score === 8 ? 'Parfait, tu es prêt(e) pour le QCM Pronote ! 🚀' :
+            score >= 5 ? "Bien ! Relis les sections qui t'ont échappé, puis va sur Pronote." :
             "Reprends la page tranquillement depuis le début, tu vas y arriver ! 💪";
         }
       };
