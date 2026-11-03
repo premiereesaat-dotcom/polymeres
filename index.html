@@ -584,41 +584,46 @@
   // Quiz éclair
   const questions = [
     { q: "Un monomère, c'est…", a: [
-      ["la petite molécule répétée pour former le polymère", true],
+      
       ["une grande molécule en chaîne", false],
+      ["la petite molécule répétée pour former le polymère", true],
       ["une molécule d'eau éliminée", false]] },
     { q: "Dans une polycondensation, il s'élimine le plus souvent…", a: [
-      ["de l'eau H₂O", true],
       ["du dioxygène O₂", false],
+      ["de l'eau H₂O", true],
+      
       ["rien du tout", false]] },
     { q: "Le PMMA (Plexiglas) est obtenu par…", a: [
       ["polyaddition", true],
       ["polycondensation", false],
       ["solidification du verre", false]] },
     { q: "Une résine époxy durcie…", a: [
-      ["ne peut plus jamais refondre (thermodurcissable)", true],
       ["refond à chaque chauffage", false],
+      ["ne peut plus jamais refondre (thermodurcissable)", true],
+      
       ["se dissout dans l'eau", false]] },
     { q: "Le recyclage mécanique consiste à…", a: [
-      ["broyer, laver, fondre et reformer", true],
+      ["brûler le plastique", false],
       ["casser les liaisons pour retrouver les monomères", false],
-      ["brûler le plastique", false]] },
+      ["broyer, laver, fondre et reformer", true]] },
     { q: "Le motif élémentaire du polyéthylène est…", a: [
-      ["—CH₂—CH₂—", true],
-      ["l'atome de carbone seul", false],
+      ["—CH₂=CH₂—", false],
+      ["—CH₂-CH₂—", true],
+      
       ["la molécule d'eau éliminée", false]] },
     { q: "L'indice de polymérisation n représente…", a: [
       ["le nombre de répétitions du motif élémentaire", true],
       ["la masse du polymère en grammes", false],
       ["le nombre d'adjuvants ajoutés", false]] },
     { q: "PMMA est le sigle de…", a: [
-      ["polyméthacrylate de méthyle (le Plexiglas)", true],
+      ["polymolymethaaminate", false],
+      ["polyméthacrylate de méthyle ", true],
       ["polyéthylène téréphtalate", false],
       ["polychlorure de vinyle", false]] },
     { q: "Un plastique biosourcé est…", a: [
-      ["fabriqué à partir de matières renouvelables", true],
+      ["comestible et sain ", false],
       ["toujours biodégradable", false],
-      ["toujours recyclé en France", false]] }
+      ["fabriqué à partir de matières renouvelables", true]] }
   ];
   let score = 0, answered = 0;
   const box = document.getElementById('quizBox');
